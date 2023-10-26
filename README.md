@@ -1,2 +1,3 @@
-# blogs
-Collection of code samples from blogs posted to ArcGIS Blog
+# Blogs
+
+A collection of code samples from blogs posted to ArcGIS Blog.
