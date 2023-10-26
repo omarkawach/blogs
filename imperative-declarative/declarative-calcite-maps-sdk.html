@@ -74,16 +74,17 @@
             </calcite-panel>
 
         </calcite-shell-panel>
-        <arcgis-map item-id="d5dda743788a4b0688fe48f43ae7beb9" id="viewDiv">
-            <arcgis-zoom position="top-right" />
-        </arcgis-map>
+        <arcgis-map item-id="d5dda743788a4b0688fe48f43ae7beb9" id="viewDiv" />
     </calcite-shell>
 </body>
 <script type="module">
     // Reference the map component
     const mapElem = document.querySelector("arcgis-map");
 
-    mapElem.addEventListener("viewReady", () => {
+    mapElem.addEventListener("viewReady", ({ detail: { view } }) => {
+        view.ui.move("zoom", "top-right");
+        view.padding = { left: 49 };
+
         let activeWidget;
 
         const handleActionBarClick = ({ target }) => {
