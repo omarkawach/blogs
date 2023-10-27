@@ -42,7 +42,7 @@
     <calcite-loader></calcite-loader>
     <calcite-shell content-behind hidden>
         <h2 id="header-title" slot="header">
-            Predominant Income Range by Households - ACS 2016
+            Predominant Educational Attainment
         </h2>
 
         <calcite-shell-panel slot="panel-start" display-mode="float">
@@ -85,7 +85,7 @@
         "esri/widgets/Print"
     ], function (WebMap, MapView, Bookmarks, BasemapGallery, LayerList, Legend, Print) {
         const webmapId = new URLSearchParams(window.location.search).get("webmap")
-            ?? "d5dda743788a4b0688fe48f43ae7beb9";
+            ?? "05e015c5f0314db9a487a9b46cb37eca";
 
         const map = new WebMap({
             portalItem: {
