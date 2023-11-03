@@ -1,13 +1,39 @@
-<html lang="en" dir="ltr">
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
-  <title>ArcGIS Maps SDK for JavaScript 4.28</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <link rel="icon" href="data:;base64,=" />
+  <title>ArcGIS Maps SDK for JavaScript</title>
+
+  <!-- Calcite Components -->
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.9.2/calcite.css" />
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.9.2/calcite.esm.js"></script>
+
+  <!-- Load the ArcGIS Maps SDK for JavaScript -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css" />
+  <script src="https://js.arcgis.com/4.28/"></script>
+
+  <!-- Prism JS -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.css" />
+  <script
+    src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
 
   <style>
     html,
-    body,
+    body {
+      background-color: var(--calcite-ui-foreground-2);
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
     #viewDiv {
       padding: 0;
       margin: 0;
@@ -15,12 +41,57 @@
       width: 100%;
       overflow: hidden;
     }
+
+    arcgis-map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .app-container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    .edit-container {
+      height: 100%;
+      width: 100%;
+
+    }
+
+    .components {
+      display: none;
+      height: 100%;
+      width: 100%;
+    }
+
+    .header {
+      width: 100%;
+      height: 50px;
+      background-color: var(--calcite-ui-brand);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      vertical-align: middle;
+      font-size: 1.5rem;
+    }
+
+    calcite-segmented-control {
+      margin-inline-start: 10px;
+    }
+
+    pre[class*=language-] {
+      margin-top: 0;
+      padding: 0 0 0 1rem;
+    }
+
+    .language-markup {
+      height: 100%;
+      padding: 0;
+    }
   </style>
-
-  <!-- Load the ArcGIS Maps SDK for JavaScript -->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css" />
-  <script src="https://js.arcgis.com/4.28/"></script>
-
   <script>
     require(["esri/views/MapView", "esri/widgets/Legend", "esri/widgets/Search", "esri/WebMap"], (MapView, Legend, Search, WebMap) => {
       const webmap = new WebMap({
@@ -45,7 +116,35 @@
 </head>
 
 <body>
-  <div id="viewDiv"></div>
+  <div class="app-container">
+    <header class="header">
+      <calcite-segmented-control appearance="outline-fill">
+        <calcite-segmented-control-item value="html" checked>HTML</calcite-segmented-control-item>
+        <calcite-segmented-control-item value="preview">Preview</calcite-segmented-control-item>
+      </calcite-segmented-control>
+    </header>
+    <div class="edit-container">
+      <pre data-src="./imperative-maps-sdk.md"></pre>
+    </div>
+    <div class="components">
+      <div id="viewDiv"></div>
+    </div>
+  </div>
+  <script>
+    const controlElm = document.querySelector('calcite-segmented-control');
+    const editContainer = document.getElementsByClassName('edit-container')[0];
+    const mapComponents = document.getElementsByClassName('components')[0];
+
+    controlElm.addEventListener('calciteSegmentedControlChange', (evt) => {
+      if (evt.target.value === "preview") {
+        editContainer.style.display = 'none';
+        mapComponents.style.display = 'block';
+        return;
+      }
+      editContainer.style.display = 'block';
+      mapComponents.style.display = 'none';
+    });
+  </script>
 </body>
 
 </html>

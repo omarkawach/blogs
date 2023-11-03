@@ -1,175 +1,255 @@
-<html>
-<!-- Inspired by https://developers.arcgis.com/calcite-design-system/tutorials/create-a-mapping-app/ -->
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <link rel="icon" href="data:;base64,=" />
     <title>Calcite and map components (imperative)</title>
 
-     <!-- Calcite Components -->
-    <script src="https://js.arcgis.com/calcite-components/1.9.2/calcite.esm.js" type="module"></script>
-    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/1.9.2/calcite.css" />
+    <!-- Calcite Components -->
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.9.2/calcite.css" />
+    <script type="module" src="https://js.arcgis.com/calcite-components/1.9.2/calcite.esm.js"></script>
 
-    <!-- ArcGIS Maps SDK for JavaScript -->
-    <script src="https://js.arcgis.com/4.28/"></script>
+    <!-- Load the ArcGIS Maps SDK for JavaScript -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.28/"></script>
+
+    <!-- Prism JS -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.css" />
+    <script
+        src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
+
+    <style>
+        html,
+        body {
+            background-color: var(--calcite-ui-foreground-2);
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        arcgis-map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        calcite-loader {
+            align-self: center;
+            justify-self: center;
+        }
+
+        .app-container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .edit-container {
+            height: 100%;
+            width: 100%;
+
+        }
+
+        .components {
+            display: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .header {
+            width: 100%;
+            height: 50px;
+            min-height: 50px;
+            background-color: var(--calcite-ui-brand);
+            color: #fff;
+            /* display: flex; */
+            align-items: center;
+            vertical-align: middle;
+            font-size: 1.5rem;
+        }
+
+        #header-title {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        calcite-segmented-control {
+            margin-block-start: 7.5px;
+            margin-inline-start: 10px;
+        }
+
+        pre[class*=language-] {
+            margin-top: 0;
+            padding: 0 0 0 1rem;
+        }
+
+        .language-markup {
+            height: 100%;
+            padding: 0;
+        }
+
+        calcite-shell {
+            margin-top: 50px;
+        }
+    </style>
 </head>
-<style>
-    html,
-    body,
-    #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-    }
-
-    body {
-        display: flex;
-    }
-
-    calcite-loader {
-        align-self: center;
-        justify-self: center;
-    }
-
-    #header-title {
-        margin-left: 1rem;
-        margin-right: 1rem;
-    }
-</style>
 
 <body>
-    <calcite-loader></calcite-loader>
-    <calcite-shell content-behind hidden>
-        <h2 id="header-title" slot="header">
-            Predominant Educational Attainment
-        </h2>
-
-        <calcite-shell-panel slot="panel-start" display-mode="float">
-            <calcite-action-bar slot="action-bar">
-                <calcite-action data-action-id="layers" icon="layers" text="Layers"></calcite-action>
-                <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
-                <calcite-action data-action-id="legend" icon="legend" text="Legend"></calcite-action>
-                <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks"></calcite-action>
-                <calcite-action data-action-id="print" icon="print" text="Print"></calcite-action>
-            </calcite-action-bar>
-
-            <!-- Map-specific panels (each one provides a div for a ArcGIS Maps SDK for JavaScript widget) -->
-            <calcite-panel heading="Layers" height-scale="l" data-panel-id="layers" hidden>
-                <div id="layers-container"></div>
-            </calcite-panel>
-            <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
-                <div id="basemaps-container"></div>
-            </calcite-panel>
-            <calcite-panel heading="Legend" height-scale="l" data-panel-id="legend" hidden>
-                <div id="legend-container"></div>
-            </calcite-panel>
-            <calcite-panel heading="Bookmarks" height-scale="l" data-panel-id="bookmarks" hidden>
-                <div id="bookmarks-container"></div>
-            </calcite-panel>
-            <calcite-panel heading="Print" height-scale="l" data-panel-id="print" hidden>
-                <div id="print-container"></div>
-            </calcite-panel>
-        </calcite-shell-panel>
-        <div id="viewDiv"></div>
-    </calcite-shell>
-</body>
-<script>
-    require([
-        "esri/WebMap",
-        "esri/views/MapView",
-        "esri/widgets/Bookmarks",
-        "esri/widgets/BasemapGallery",
-        "esri/widgets/LayerList",
-        "esri/widgets/Legend",
-        "esri/widgets/Print"
-    ], function (WebMap, MapView, Bookmarks, BasemapGallery, LayerList, Legend, Print) {
-        const webmapId = new URLSearchParams(window.location.search).get("webmap")
-            ?? "05e015c5f0314db9a487a9b46cb37eca";
-
-        const map = new WebMap({
-            portalItem: {
-                id: webmapId
-            }
-        });
-
-        const view = new MapView({
-            map,
-            container: "viewDiv",
-            padding: {
-                left: 49
-            }
-        });
-
-        view.ui.move("zoom", "top-right");
-
-        const basemaps = new BasemapGallery({
-            view,
-            container: "basemaps-container"
-        });
-
-        const bookmarks = new Bookmarks({
-            view,
-            container: "bookmarks-container"
-        });
-
-        const layerList = new LayerList({
-            view,
-            selectionEnabled: true,
-            container: "layers-container"
-        });
-
-        const legend = new Legend({
-            view,
-            container: "legend-container"
-        });
-
-        const print = new Print({
-            view,
-            container: "print-container"
-        });
-
-        map.when(() => {
-            let activeWidget;
-
-            const handleActionBarClick = ({ target }) => {
-                if (target.tagName !== "CALCITE-ACTION") {
-                    return;
+    <div class="app-container">
+        <header class="header">
+            <calcite-segmented-control appearance="outline-fill">
+                <calcite-segmented-control-item value="html" checked>HTML</calcite-segmented-control-item>
+                <calcite-segmented-control-item value="preview">Preview</calcite-segmented-control-item>
+            </calcite-segmented-control>
+        </header>
+        <div class="edit-container">
+            <pre data-src="./imperative-calcite-maps-sdk.md"></pre>
+        </div>
+        <div class="components">
+            <calcite-loader></calcite-loader>
+            <calcite-shell content-behind hidden>
+                <h2 id="header-title" slot="header">
+                    Predominant Educational Attainment
+                </h2>
+                <calcite-shell-panel slot="panel-start" display-mode="float">
+                    <calcite-action-bar slot="action-bar">
+                        <calcite-action data-action-id="layers" icon="layers" text="Layers"></calcite-action>
+                        <calcite-action data-action-id="basemaps" icon="basemap" text="Basemaps"></calcite-action>
+                        <calcite-action data-action-id="legend" icon="legend" text="Legend"></calcite-action>
+                        <calcite-action data-action-id="bookmarks" icon="bookmark" text="Bookmarks"></calcite-action>
+                        <calcite-action data-action-id="print" icon="print" text="Print"></calcite-action>
+                    </calcite-action-bar>
+                    <!-- Map-specific panels (each one provides a div for a ArcGIS Maps SDK for JavaScript widget) -->
+                    <calcite-panel heading="Layers" height-scale="l" data-panel-id="layers" hidden>
+                        <div id="layers-container"></div>
+                    </calcite-panel>
+                    <calcite-panel heading="Basemaps" height-scale="l" data-panel-id="basemaps" hidden>
+                        <div id="basemaps-container"></div>
+                    </calcite-panel>
+                    <calcite-panel heading="Legend" height-scale="l" data-panel-id="legend" hidden>
+                        <div id="legend-container"></div>
+                    </calcite-panel>
+                    <calcite-panel heading="Bookmarks" height-scale="l" data-panel-id="bookmarks" hidden>
+                        <div id="bookmarks-container"></div>
+                    </calcite-panel>
+                    <calcite-panel heading="Print" height-scale="l" data-panel-id="print" hidden>
+                        <div id="print-container"></div>
+                    </calcite-panel>
+                </calcite-shell-panel>
+                <div id="viewDiv"></div>
+            </calcite-shell>
+        </div>
+    </div>
+    <script>
+        require([
+            "esri/WebMap",
+            "esri/views/MapView",
+            "esri/widgets/Bookmarks",
+            "esri/widgets/BasemapGallery",
+            "esri/widgets/LayerList",
+            "esri/widgets/Legend",
+            "esri/widgets/Print"
+        ], function (WebMap, MapView, Bookmarks, BasemapGallery, LayerList, Legend, Print) {
+            const webmapId = new URLSearchParams(window.location.search).get("webmap")
+                ?? "05e015c5f0314db9a487a9b46cb37eca";
+            const map = new WebMap({
+                portalItem: {
+                    id: webmapId
                 }
-
-                const nextWidget = target.dataset.actionId;
-
-                if (nextWidget === activeWidget) {
-                    target.active = false;
-                    document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = true;
-                    activeWidget = null;
-                } else {
-                    if (activeWidget) {
-                        document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
-                        document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
-                    }
-
-                    target.active = true;
-                    document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
-                    activeWidget = nextWidget;
-                }
-            };
-
-            let actionBarExpanded = false;
-
-            document.addEventListener("calciteActionBarToggle", event => {
-                actionBarExpanded = !actionBarExpanded;
-                view.padding = {
-                    left: actionBarExpanded ? 150 : 49
-                };
             });
-
-            document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
-
-            document.querySelector("calcite-shell").hidden = false;
-            document.querySelector("calcite-loader").hidden = true;
+            const view = new MapView({
+                map,
+                container: "viewDiv",
+                padding: {
+                    left: 49
+                }
+            });
+            view.ui.move("zoom", "top-right");
+            const basemaps = new BasemapGallery({
+                view,
+                container: "basemaps-container"
+            });
+            const bookmarks = new Bookmarks({
+                view,
+                container: "bookmarks-container"
+            });
+            const layerList = new LayerList({
+                view,
+                selectionEnabled: true,
+                container: "layers-container"
+            });
+            const legend = new Legend({
+                view,
+                container: "legend-container"
+            });
+            const print = new Print({
+                view,
+                container: "print-container"
+            });
+            map.when(() => {
+                let activeWidget;
+                const handleActionBarClick = ({ target }) => {
+                    if (target.tagName !== "CALCITE-ACTION") {
+                        return;
+                    }
+                    const nextWidget = target.dataset.actionId;
+                    if (nextWidget === activeWidget) {
+                        target.active = false;
+                        document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = true;
+                        activeWidget = null;
+                    } else {
+                        if (activeWidget) {
+                            document.querySelector(`[data-action-id=${activeWidget}]`).active = false;
+                            document.querySelector(`[data-panel-id=${activeWidget}]`).hidden = true;
+                        }
+                        target.active = true;
+                        document.querySelector(`[data-panel-id=${nextWidget}]`).hidden = false;
+                        activeWidget = nextWidget;
+                    }
+                };
+                let actionBarExpanded = false;
+                document.addEventListener("calciteActionBarToggle", event => {
+                    actionBarExpanded = !actionBarExpanded;
+                    view.padding = {
+                        left: actionBarExpanded ? 150 : 49
+                    };
+                });
+                document.querySelector("calcite-action-bar").addEventListener("click", handleActionBarClick);
+                document.querySelector("calcite-shell").hidden = false;
+                document.querySelector("calcite-loader").hidden = true;
+            });
         });
-    });
-</script>
+    </script>
+    <script>
+        const controlElm = document.querySelector('calcite-segmented-control');
+        const editContainer = document.getElementsByClassName('edit-container')[0];
+        const mapComponents = document.getElementsByClassName('components')[0];
+
+        controlElm.addEventListener('calciteSegmentedControlChange', (evt) => {
+            if (evt.target.value === "preview") {
+                editContainer.style.display = 'none';
+                mapComponents.style.display = 'block';
+                return;
+            }
+            editContainer.style.display = 'block';
+            mapComponents.style.display = 'none';
+        });
+    </script>
+</body>
 
 </html>
