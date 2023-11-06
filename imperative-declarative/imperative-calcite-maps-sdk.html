@@ -32,32 +32,15 @@
             margin: 0;
             width: 100vw;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
+            overflow-y: hidden;
         }
 
         #viewDiv {
             padding: 0;
             margin: 0;
-            height: 100%;
-            width: 100%;
-        }
-
-        .app-container {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-        }
-
-        .edit-container {
-            height: 100%;
-            width: 100%;
-
-        }
-
-        .components {
-            display: none;
             height: 100%;
             width: 100%;
         }
@@ -68,14 +51,34 @@
             min-height: 50px;
             background-color: var(--calcite-ui-brand);
             color: #fff;
-            /* display: flex; */
+            display: flex;
             align-items: center;
             vertical-align: middle;
             font-size: 1.5rem;
         }
 
+        .app-container {
+            display: flex;
+            flex: 1 1 auto;
+            align-items: center;
+            flex-direction: column;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .edit-container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .components {
+            display: none;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
         calcite-segmented-control {
-            margin-block-start: 7.5px;
             margin-inline-start: 10px;
         }
 
@@ -93,21 +96,17 @@
             height: 100%;
             padding: 0;
         }
-
-        calcite-shell {
-            margin-top: 50px;
-        }
     </style>
 </head>
 
 <body>
+    <header class="header">
+        <calcite-segmented-control appearance="outline-fill">
+            <calcite-segmented-control-item value="html" checked>HTML</calcite-segmented-control-item>
+            <calcite-segmented-control-item value="preview">Preview</calcite-segmented-control-item>
+        </calcite-segmented-control>
+    </header>
     <div class="app-container">
-        <header class="header">
-            <calcite-segmented-control appearance="outline-fill">
-                <calcite-segmented-control-item value="html" checked>HTML</calcite-segmented-control-item>
-                <calcite-segmented-control-item value="preview">Preview</calcite-segmented-control-item>
-            </calcite-segmented-control>
-        </header>
         <div class="edit-container">
             <pre data-src="./imperative-calcite-maps-sdk.md"></pre>
         </div>
