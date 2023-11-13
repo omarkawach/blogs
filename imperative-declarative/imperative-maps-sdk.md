@@ -17,7 +17,6 @@
         overflow: hidden;
       }
     </style>
-    <!-- Load the ArcGIS Maps SDK for JavaScript -->
     <link
       rel="stylesheet"
       href="https://js.arcgis.com/4.28/esri/themes/light/main.css"
