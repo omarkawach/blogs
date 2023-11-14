@@ -123,9 +123,9 @@
         </div>
     </div>
     <script type="module">
-        const mapElm = document.querySelector("arcgis-map");
-        const layerListElm = document.querySelector("arcgis-layer-list");
-        layerListElm.addEventListener("widgetReady", (event) => {
+        const mapElement = document.querySelector("arcgis-map");
+        const layerListElement = document.querySelector("arcgis-layer-list");
+        layerListElement.addEventListener("widgetReady", (event) => {
             const layerList = event.detail.widget;
             layerList.listItemCreatedFunction = (event) => {
                 const item = event.item;
@@ -136,7 +136,7 @@
                 }
             };
         });
-        mapElm.addEventListener("viewReady", async (event) => {
+        mapElement.addEventListener("viewReady", async (event) => {
             const view = event.detail.view;
             const portalItem = view.map.portalItem;
             const navigationLogo = document.querySelector("calcite-navigation-logo");
@@ -150,11 +150,11 @@
         });
     </script>
     <script>
-        const controlElm = document.querySelector('calcite-segmented-control');
+        const controlElement = document.querySelector('calcite-segmented-control');
         const editContainer = document.getElementsByClassName('edit-container')[0];
         const mapComponents = document.getElementsByClassName('components')[0];
 
-        controlElm.addEventListener('calciteSegmentedControlChange', (evt) => {
+        controlElement.addEventListener('calciteSegmentedControlChange', (evt) => {
             if (evt.target.value === "preview") {
                 editContainer.style.display = 'none';
                 mapComponents.style.display = 'block';

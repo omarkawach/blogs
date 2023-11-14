@@ -46,9 +46,9 @@
       </arcgis-map>
     </calcite-shell>
     <script type="module">
-      const mapElm = document.querySelector("arcgis-map");
-      const layerListElm = document.querySelector("arcgis-layer-list");
-      layerListElm.addEventListener("widgetReady", (event) => {
+      const mapElement = document.querySelector("arcgis-map");
+      const layerListElement = document.querySelector("arcgis-layer-list");
+      layerListElement.addEventListener("widgetReady", (event) => {
         const layerList = event.detail.widget;
         layerList.listItemCreatedFunction = (event) => {
           const item = event.item;
@@ -59,7 +59,7 @@
           }
         };
       });
-      mapElm.addEventListener("viewReady", async (event) => {
+      mapElement.addEventListener("viewReady", async (event) => {
         const view = event.detail.view;
         const portalItem = view.map.portalItem;
         const navigationLogo = document.querySelector(

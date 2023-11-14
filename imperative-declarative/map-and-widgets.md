@@ -62,8 +62,8 @@
     </calcite-shell>
     <script type="module">
       // Reference the map component
-      const mapElem = document.querySelector("arcgis-map");
-      mapElem.addEventListener("viewReady", ({ detail: { view } }) => {
+      const mapElement = document.querySelector("arcgis-map");
+      mapElement.addEventListener("viewReady", ({ detail: { view } }) => {
         view.ui.move("zoom", "top-right");
         view.padding = { left: 49 };
         let activeWidget;

@@ -129,9 +129,9 @@
     </div>
     <script type="module">
         // Reference the map component
-        const mapElem = document.querySelector("arcgis-map");
+        const mapElement = document.querySelector("arcgis-map");
 
-        mapElem.addEventListener("viewReady", ({ detail: { view } }) => {
+        mapElement.addEventListener("viewReady", ({ detail: { view } }) => {
             view.ui.move("zoom", "top-right");
             view.padding = { left: 49 };
 
@@ -173,11 +173,11 @@
         });
     </script>
     <script>
-        const controlElm = document.querySelector('calcite-segmented-control');
+        const controlElement = document.querySelector('calcite-segmented-control');
         const editContainer = document.getElementsByClassName('edit-container')[0];
         const mapComponents = document.getElementsByClassName('components')[0];
 
-        controlElm.addEventListener('calciteSegmentedControlChange', (evt) => {
+        controlElement.addEventListener('calciteSegmentedControlChange', (evt) => {
             if (evt.target.value === "preview") {
                 editContainer.style.display = 'none';
                 mapComponents.style.display = 'block';

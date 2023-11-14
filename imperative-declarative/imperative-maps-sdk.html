@@ -136,12 +136,12 @@
     </div>
   </div>
   <script>
-    const controlElm = document.querySelector('calcite-segmented-control');
+    const controlElement = document.querySelector('calcite-segmented-control');
     const editContainer = document.getElementsByClassName('edit-container')[0];
     const mapComponents = document.getElementsByClassName('components')[0];
     const header = document.getElementsByClassName('header')[0];
 
-    controlElm.addEventListener('calciteSegmentedControlChange', (evt) => {
+    controlElement.addEventListener('calciteSegmentedControlChange', (evt) => {
       if (evt.target.value === "preview") {
         editContainer.style.display = 'none';
         mapComponents.style.display = 'block';
