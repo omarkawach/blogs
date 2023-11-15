@@ -65,6 +65,7 @@
             flex-direction: column;
             width: 100%;
             overflow-y: auto;
+            position: relative;
         }
 
         .edit-container {
@@ -122,18 +123,15 @@
         const controlElement = document.querySelector('calcite-segmented-control');
         const editContainer = document.getElementsByClassName('edit-container')[0];
         const mapComponents = document.getElementsByClassName('components')[0];
-        const header = document.getElementsByClassName('header')[0];
 
         controlElement.addEventListener('calciteSegmentedControlChange', (evt) => {
             if (evt.target.value === "preview") {
                 editContainer.style.display = 'none';
                 mapComponents.style.display = 'block';
-                header.style.position = 'static';
                 return;
             }
             editContainer.style.display = 'block';
             mapComponents.style.display = 'none';
-            header.style.position = 'fixed';
         });
     </script>
 </body>
