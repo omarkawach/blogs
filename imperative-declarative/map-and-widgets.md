@@ -27,7 +27,7 @@
     // Reference the map component
     const mapElement = document.querySelector("arcgis-map");
 
-    mapElement.addEventListener("arcgisViewReadyChange", ({ detail: { view } }) => {
+    mapElement.addEventListener("arcgisViewReadyChange", ({ target: { view } }) => {
       view.ui.move("zoom", "top-right");
       view.padding = { left: 49 };
       let activeWidget;
