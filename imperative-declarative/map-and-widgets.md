@@ -16,7 +16,7 @@
       >
         <arcgis-legend
           id="legend-container"
-          reference-element="#viewDiv"
+          reference-element="viewDiv"
         ></arcgis-legend>
       </calcite-panel>
     </calcite-shell-panel>
