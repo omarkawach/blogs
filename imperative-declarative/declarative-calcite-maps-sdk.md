@@ -12,7 +12,7 @@
       const mapElement = document.querySelector("arcgis-map");
       const layerListElement = document.querySelector("arcgis-layer-list");
 
-      layerListElement.addEventListener("arcgisLayerListReady", (event) => {
+      layerListElement.addEventListener("arcgisReady", (event) => {
           const layerList = event.target;
           layerList.listItemCreatedFunction = (event) => {
               const item = event.item;
