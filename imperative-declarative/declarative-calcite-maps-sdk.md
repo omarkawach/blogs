@@ -1,10 +1,10 @@
 <body>
   <calcite-shell>
     <calcite-navigation slot="header">
-      <calcite-navigation-logo slot="logo" />
+      <calcite-navigation-logo slot="logo"></calcite-navigation-logo>
     </calcite-navigation>
     <arcgis-map item-id="e691172598f04ea8881cd2a4adaa45ba" zoom="4">
-      <arcgis-layer-list position="top-right" />
+      <arcgis-layer-list slot="top-right"></arcgis-layer-list>
     </arcgis-map>
   </calcite-shell>
 

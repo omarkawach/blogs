@@ -2,35 +2,27 @@
 <html dir="ltr" lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
-    <link rel="icon" href="data:;base64,=" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+    <link rel="icon" href="data:;base64,=">
     <title>Calcite and map components (declarative)</title>
 
-    <!-- Calcite Components -->
-    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.10.0/calcite.css" />
-    <script type="module" src="https://js.arcgis.com/calcite-components/2.10.0/calcite.esm.js"></script>
-
-    <!-- Load the ArcGIS Maps SDK for JavaScript -->
-    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
-    <script src="https://js.arcgis.com/4.30/"></script>
-
-    <!-- Load the Map Components -->
-    <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
+    <!-- Load the ArcGIS Maps SDK for JavaScript from the CDN -->
+    <script type="module" src="https://js.arcgis.com/5.0/"></script>
 
     <!-- Prism JS -->
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css">
     <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.css" />
+        href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.css">
     <script
         src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
 
     <style>
         html,
         body {
-            background-color: var(--calcite-ui-foreground-2);
+            background-color: var(--calcite-color-surface-3);
             padding: 0;
             margin: 0;
             width: 100vw;
@@ -50,7 +42,7 @@
             width: 100%;
             height: 50px;
             min-height: 50px;
-            background-color: var(--calcite-ui-brand);
+            background-color: var(--calcite-color-brand);
             color: #fff;
             display: flex;
             align-items: center;
@@ -115,10 +107,10 @@
         <div class="components">
             <calcite-shell>
                 <calcite-navigation slot="header">
-                    <calcite-navigation-logo slot="logo" />
+                    <calcite-navigation-logo slot="logo"></calcite-navigation-logo>
                 </calcite-navigation>
                 <arcgis-map item-id="e691172598f04ea8881cd2a4adaa45ba" zoom="4">
-                    <arcgis-layer-list position="top-right" />
+                    <arcgis-layer-list slot="top-right"></arcgis-layer-list>
                 </arcgis-map>
             </calcite-shell>
         </div>

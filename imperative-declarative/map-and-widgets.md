@@ -20,7 +20,7 @@
         ></arcgis-legend>
       </calcite-panel>
     </calcite-shell-panel>
-    <arcgis-map item-id="05e015c5f0314db9a487a9b46cb37eca" id="viewDiv" />
+    <arcgis-map item-id="05e015c5f0314db9a487a9b46cb37eca" id="viewDiv"></arcgis-map>
   </calcite-shell>
 
   <script type="module">
